@@ -26,6 +26,27 @@ public class MoodAnalizerFactory {
         }
         return null;
     }
+    public static MoodAnalizer creatMoodAnalizer(String message,String className) {
+        try {
+            Constructor<?> constructor = Class.forName(className).getConstructor(String.class);
+            Object objCreation = constructor.newInstance(message);
+            MoodAnalizer objMood = (MoodAnalizer) objCreation;
+            return objMood;
+
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new MoodAnalysisException(MoodAnalysisException.moodException.ENTERED_CLASS_NOT_FOUND,"This is empty class");
+            // e.printStackTrace();
+        }catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     public static void getConstructor(String stringName,Class<?> stringClass) throws MoodAnalysisException{
         try{

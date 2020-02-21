@@ -108,4 +108,35 @@ public class MoodAnalizerTest {
             Assert.assertEquals(MoodAnalysisException.moodException.NO_SUCH_METHOD, e.type);
         }
     }
+    @Test
+    public void giveMoodAnalizerClass_WhenProper_ShouldReturnObject() {
+        MoodAnalizer moodAnalizer = MoodAnalizerFactory.creatMoodAnalizer("I am happy","com.bridgelabz.com.MoodAnalizer");
+        try {
+            String mood= moodAnalizer.analizerMood();
+            Assert.assertEquals("HAPPY",mood);
+        }catch (MoodAnalysisException e){
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void givenMoodAnalyserClass_WhenProper_ShouldReturnObject() {
+        MoodAnalizer moodAnalizer=null;
+        try {
+            moodAnalizer = MoodAnalizerFactory.creatMoodAnalizer("I am in happy mood","com.bridgelabz.com.MoodAnalizer");
+            Assert.assertEquals(new MoodAnalizer("I am in happy mood"), moodAnalizer);
+        }catch (MoodAnalysisException e){
+            e.printStackTrace();
+        }
+    }
+
+
+    @Test
+    public void givenWrongClass_WhenImproper_ShouldReturnNoSuchClassERROR() {
+        try {
+            MoodAnalizerFactory.creatMoodAnalizer("Class not found error", "com.moodanalyzer.MoodAnalyzer");
+        } catch (MoodAnalysisException e) {
+            Assert.assertEquals(MoodAnalysisException.moodException.ENTERED_CLASS_NOT_FOUND, e.type);
+        }
+    }
 }
