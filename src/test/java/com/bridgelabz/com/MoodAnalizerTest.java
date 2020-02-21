@@ -139,4 +139,27 @@ public class MoodAnalizerTest {
             Assert.assertEquals(MoodAnalysisException.moodException.ENTERED_CLASS_NOT_FOUND, e.type);
         }
     }
+
+    @Test
+    public void givenMethod_WhenProper_ShouldInvoke() {
+        try {
+            MoodAnalizer moodAnalizer = MoodAnalizerFactory.creatMoodAnalizer("I am in happy mood","com.bridgelabz.com.MoodAnalizer");
+            String analyzeMood = MoodAnalizerFactory.getMethod(moodAnalizer, "analyzeMood");
+            Assert.assertEquals("HAPPY", analyzeMood);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void givenMethodShouldThrowException() {
+        try {
+           MoodAnalizer moodAnalizer=MoodAnalizerFactory.creatMoodAnalizer("I am in happy mood","com.bridgelabz.com.MoodAnalizer");
+            String analyzeMood=MoodAnalizerFactory.getMethod(moodAnalizer,"this is method");
+        }catch (MoodAnalysisException e)
+        {
+            Assert.assertEquals(MoodAnalysisException.moodException.NO_SUCH_METHOD, e.type);
+        }
+    }
+
 }
