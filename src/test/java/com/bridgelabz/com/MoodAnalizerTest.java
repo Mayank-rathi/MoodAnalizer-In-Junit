@@ -32,7 +32,7 @@ public class MoodAnalizerTest {
 
     @Test
     public void givenNullMood_ShouldReturnHappy() {
-        MoodAnalizer moodAnalizer = new MoodAnalizer();
+        MoodAnalizer moodAnalizer = new MoodAnalizer(null);
         try {
             String mood = moodAnalizer.analizerMood();
         } catch (MoodAnalysisException e) {
@@ -162,4 +162,36 @@ public class MoodAnalizerTest {
         }
     }
 
+    @Test
+    public void giveHappyThroughRelection_ShouldReturnHappy() {
+        try {
+            MoodAnalizer moodAnalizer = MoodAnalizerFactory.creatMoodAnalizer("I am in happy mood", "com.bridgelabz.com.MoodAnalizer");
+            String analyzeMood = MoodAnalizerFactory.setField(moodAnalizer, "mood", "I am in happy mood ");
+            Assert.assertEquals("HAPPY", analyzeMood);
+        } catch (MoodAnalysisException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void givenHappyThroughReflection_ShouldReturnException() {
+        try {
+            MoodAnalizer moodAnalizer = MoodAnalizerFactory.creatMoodAnalizer("I am in happy mood", "com.bridgelabz.com.MoodAnalizer");
+            MoodAnalizerFactory.setField(moodAnalizer, "mood", "I am in happy mood");
+        } catch (MoodAnalysisException e) {
+            Assert.assertEquals(MoodAnalysisException.moodException.NO_SUCH_METHOD, e.type);
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void givenHappyThroughReflection_ShouldReturnExceptionNull() {
+        try
+        {
+            MoodAnalizer moodAnalizer = MoodAnalizerFactory.creatMoodAnalizer("I am in happy mood", "com.bridgelabz.com.MoodAnalizer");
+            String analyzerMood = MoodAnalizerFactory.setField(moodAnalizer, "mood", null);
+        } catch (MoodAnalysisException e) {
+            Assert.assertEquals(MoodAnalysisException.moodException.OBJECT_CREATION_ISSUE,e.type);
+        }
+    }
 }
